@@ -1,23 +1,23 @@
 import { fetchWeatherApi } from 'openmeteo';
 import './App.css';
 const averageTemperatures = {};
+const coordinates = {
+  latitude: 48.2085,
+  longitude: 16.3721,
+};
 async function getWeather() {
-  const coordinates = {
-    latitude: 48.2085,
-    longitude: 16.3721,
-  };
   if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      coordinates.latitude = position.coords.latitude;
-      coordinates.longitude = position.coords.longitude;
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
     });
+    coordinates.latitude = position.coords.latitude;
+    coordinates.longitude = position.coords.longitude;
   } else {
     console.log("Default Location: Vienna");
   }
 
   const currentDate = new Date();
   const dateString = `${currentDate.getFullYear()}-${("0" + (currentDate.getMonth()+1)).slice(-2)}-${("0" + (currentDate.getDate())).slice(-2)}`;
-  console.log(dateString);
   const params = {
     "latitude": coordinates.latitude,
     "longitude": coordinates.longitude,
@@ -113,6 +113,7 @@ function App() {
     <div class="App">
       <header><h1>Durchschnittstemperaturen pro Tag:</h1></header>
       {listItems}
+      <div class="coordinates">Aktueller Ort: {coordinates.latitude} {coordinates.longitude}</div>
     </div>
   );
 }
