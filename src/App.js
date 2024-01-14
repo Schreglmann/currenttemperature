@@ -2,12 +2,25 @@ import { fetchWeatherApi } from 'openmeteo';
 import './App.css';
 const averageTemperatures = {};
 async function getWeather() {
+  const coordinates = {
+    latitude: 48.2085,
+    longitude: 16.3721,
+  };
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      coordinates.latitude = position.coords.latitude;
+      coordinates.longitude = position.coords.longitude;
+    });
+  } else {
+    console.log("Default Location: Vienna");
+  }
+
   const currentDate = new Date();
   const dateString = `${currentDate.getFullYear()}-${("0" + (currentDate.getMonth()+1)).slice(-2)}-${("0" + (currentDate.getDate())).slice(-2)}`;
   console.log(dateString);
   const params = {
-    "latitude": 47.7994,
-    "longitude": 13.044,
+    "latitude": coordinates.latitude,
+    "longitude": coordinates.longitude,
     "hourly": "temperature_2m",
     "start_date": "2024-01-01",
     "end_date": dateString,
