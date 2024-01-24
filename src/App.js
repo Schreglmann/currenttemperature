@@ -50,15 +50,13 @@ async function getWeather() {
     const month = ("0" + (weatherData.hourly.time[i].getMonth() + 1)).slice(-2);
 
     const date = `${day}.${month}.`;
-    
-    if ((weatherData.hourly.time[i].getDate() !== currentDate.getDate()) || (weatherData.hourly.time[i].getMonth() !== currentDate.getMonth())) {
-      if (weatherData.hourly.time[i].getTime() > currentDate.getTime()) continue;
-      if (!temperatures[date]) {
-        temperatures[date] = [];
-      }
 
-      temperatures[date].push(weatherData.hourly.temperature2m[i]);
+    if (weatherData.hourly.time[i].getTime() > currentDate.getTime()) continue;
+    if (!temperatures[date]) {
+      temperatures[date] = [];
     }
+
+    temperatures[date].push(weatherData.hourly.temperature2m[i]);
   }
 
   console.log(temperatures);
@@ -102,7 +100,7 @@ function App() {
       <div class={temperaturColorClass}>
         <span class="date">{key}: </span>
         <span class="temp">
-          {Math.round(value * 100) / 100}°
+          {Math.round(value)}°
         </span>
       </div>
     );
