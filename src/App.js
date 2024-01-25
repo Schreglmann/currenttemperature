@@ -71,7 +71,8 @@ await getWeather();
 
 function App() {
   let listItems = [];
-  for (const [key, value] of Object.entries(averageTemperatures).reverse()) {
+  for (let [key, value] of Object.entries(averageTemperatures).reverse()) {
+    value = Math.round(value);
     let temperaturColorClass;
     switch (true) {
       case value <= -7:
@@ -100,7 +101,7 @@ function App() {
       <div class={temperaturColorClass}>
         <span class="date">{key}: </span>
         <span class="temp">
-          {Math.round(value)}°
+          {value}°
         </span>
       </div>
     );
