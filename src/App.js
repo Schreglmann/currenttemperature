@@ -90,7 +90,7 @@ function App() {
       case value <= 19:
         temperaturColorClass = "thirteenTo19 dateTemp";
         break;
-      case value <= 28:
+      case value <= 26:
         temperaturColorClass = "twentyTo28 dateTemp";
         break;
       default:
